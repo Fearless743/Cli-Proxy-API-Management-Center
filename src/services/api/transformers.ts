@@ -34,6 +34,8 @@ const normalizeModelAliases = (models: unknown): ModelAlias[] => {
       const testModel = item['test-model'];
       const image = normalizeBoolean(item.image);
       const thinking = normalizeRecord(item.thinking);
+      const contextWindow = item['context-length'];
+      const maxTokens = item['max-tokens'];
       const entry: ModelAlias = { name: String(name) };
       if (alias && alias !== name) {
         entry.alias = String(alias);
@@ -52,6 +54,18 @@ const normalizeModelAliases = (models: unknown): ModelAlias[] => {
       }
       if (thinking) {
         entry.thinking = thinking;
+      }
+      if (contextWindow !== undefined) {
+        const parsed = Number(contextWindow);
+        if (Number.isFinite(parsed) && parsed > 0) {
+          entry.contextWindow = parsed;
+        }
+      }
+      if (maxTokens !== undefined) {
+        const parsed = Number(maxTokens);
+        if (Number.isFinite(parsed) && parsed > 0) {
+          entry.maxTokens = parsed;
+        }
       }
       return entry;
     })

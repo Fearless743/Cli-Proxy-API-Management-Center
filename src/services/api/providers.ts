@@ -298,6 +298,12 @@ const serializeModelAliases = (models?: ModelAlias[], includeOpenAIFields = fals
           if (model.testModel) {
             payload['test-model'] = model.testModel;
           }
+          if (model.contextWindow !== undefined && model.contextWindow > 0) {
+            payload['context-length'] = model.contextWindow;
+          }
+          if (model.maxTokens !== undefined && model.maxTokens > 0) {
+            payload['max-tokens'] = model.maxTokens;
+          }
           if (includeOpenAIFields) {
             if (model.image) {
               payload.image = true;

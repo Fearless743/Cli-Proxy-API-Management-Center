@@ -1331,7 +1331,8 @@
       "apikeyFun": "APIKEY.FUN",
       "code0": "Code0",
       "fennoAI": "FennoAI",
-      "qiniuCloud": "七牛云"
+      "qiniuCloud": "七牛云",
+      "commandcode": "CommandCode"
     },
     "table": {
       "key": "密钥",
@@ -1487,6 +1488,10 @@
       "modelBadgeThinking": "Thinking",
       "thinkingConfig": "Thinking 配置(JSON)",
       "thinkingConfigHint": "可配置 levels、min、max、zero_allowed、dynamic_allowed",
+"contextWindow": "上下文窗口",
+"contextWindowHint": "输入上下文长度（token），0 表示使用默认值",
+"maxTokens": "最大输出",
+"maxTokensHint": "最大输出 token 数，0 表示使用默认值",
       "cloakCacheUserId": "缓存 user_id",
       "cloakCacheUserIdHint": "按 API key 复用 Claude cloak 生成的 user_id",
       "experimentalCchSigning": "实验性 CCH 签名",

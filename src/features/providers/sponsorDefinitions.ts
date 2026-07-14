@@ -35,6 +35,15 @@ import {
   getQiniuCloudProtocolUrls,
   resolveQiniuCloudBaseUrl,
 } from './qiniuCloud';
+import {
+  COMMANDCODE_AFFILIATE_URL,
+  COMMANDCODE_BASE_URL_OPTIONS,
+  COMMANDCODE_DISPLAY_NAME,
+  COMMANDCODE_PROTOCOL_LABELS,
+  COMMANDCODE_PROVIDER_NAME,
+  getCommandCodeProtocolUrls,
+  resolveCommandCodeBaseUrl,
+} from './commandcode';
 import type {
   ProviderBrand,
   SponsorProtocol,
@@ -128,10 +137,27 @@ const SPONSOR_DEFINITIONS: Record<SponsorProviderBrand, SponsorProviderDefinitio
     resolveBaseUrl: resolveQiniuCloudBaseUrl,
     getProtocolUrls: getQiniuCloudProtocolUrls,
   },
+  commandcode: {
+    brand: 'commandcode',
+    displayName: COMMANDCODE_DISPLAY_NAME,
+    providerName: COMMANDCODE_PROVIDER_NAME,
+    affiliateUrl: COMMANDCODE_AFFILIATE_URL,
+    protocols: ['openai'],
+    protocolLabels: COMMANDCODE_PROTOCOL_LABELS,
+    defaultProtocol: 'openai',
+    baseUrlOptions: COMMANDCODE_BASE_URL_OPTIONS,
+    supportsUsageCheck: false,
+    resolveBaseUrl: resolveCommandCodeBaseUrl,
+    getProtocolUrls: getCommandCodeProtocolUrls,
+  },
 };
 
 export const isMultiProtocolSponsorBrand = (brand: ProviderBrand): brand is SponsorProviderBrand =>
-  brand === 'apikeyFun' || brand === 'code0' || brand === 'fennoAI' || brand === 'qiniuCloud';
+  brand === 'apikeyFun' ||
+  brand === 'code0' ||
+  brand === 'fennoAI' ||
+  brand === 'qiniuCloud' ||
+  brand === 'commandcode';
 
 export type SponsorAggregationConflict = 'multiple-configs' | 'multiple-openai-keys';
 

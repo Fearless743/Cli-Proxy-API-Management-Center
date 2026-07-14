@@ -9,6 +9,7 @@ import apikeyFunLogo from '@/assets/icons/apikey-fun.png';
 import code0Logo from '@/assets/icons/code0.png';
 import fennoAILogo from '@/assets/icons/fenno-ai.png';
 import qiniuCloudLogo from '@/assets/icons/qiniu-cloud.png';
+import commandcodeLogo from '@/assets/icons/commandcode.svg';
 import type { ProviderBrand } from './types';
 
 export interface ProviderBrandLogo {
@@ -29,4 +30,5 @@ export const PROVIDER_LOGOS: Record<ProviderBrand, ProviderBrandLogo> = {
   code0: { src: code0Logo },
   fennoAI: { src: fennoAILogo, transparent: true },
   qiniuCloud: { src: qiniuCloudLogo, transparent: true },
+  commandcode: { src: commandcodeLogo },
 };

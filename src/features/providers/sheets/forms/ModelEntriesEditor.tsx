@@ -111,6 +111,37 @@ export function ModelEntriesEditor({
                 </button>
               </div>
             </div>
+            {/* Context window and max tokens - shown for all providers */}
+            <div className={styles.modelEntryMeta}>
+              <input
+                className={styles.inputSmall}
+                type="number"
+                min="0"
+                step="1000"
+                placeholder={t('providersPage.form.contextWindow') || 'context window'}
+                value={entry.contextWindow ?? ''}
+                onChange={(e) =>
+                  onUpdate(idx, {
+                    contextWindow: e.target.value === '' ? undefined : Number(e.target.value),
+                  })
+                }
+                disabled={mutating}
+              />
+              <input
+                className={styles.inputSmall}
+                type="number"
+                min="0"
+                step="1000"
+                placeholder={t('providersPage.form.maxTokens') || 'max tokens'}
+                value={entry.maxTokens ?? ''}
+                onChange={(e) =>
+                  onUpdate(idx, {
+                    maxTokens: e.target.value === '' ? undefined : Number(e.target.value),
+                  })
+                }
+                disabled={mutating}
+              />
+            </div>
             {expanded ? (
               <div className={styles.modelEntryDetails}>
                 <label className={styles.checkboxRow}>

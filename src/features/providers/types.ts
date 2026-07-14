@@ -14,9 +14,10 @@ export type ProviderBrand =
   | 'apikeyFun'
   | 'code0'
   | 'fennoAI'
-  | 'qiniuCloud';
+  | 'qiniuCloud'
+  | 'commandcode';
 
-export type SponsorProviderBrand = 'apikeyFun' | 'code0' | 'fennoAI' | 'qiniuCloud';
+export type SponsorProviderBrand = 'apikeyFun' | 'code0' | 'fennoAI' | 'qiniuCloud' | 'commandcode';
 
 export const PROVIDER_SORT_BY_VALUES = ['name', 'priority', 'recent-success'] as const;
 export type ProviderSortBy = (typeof PROVIDER_SORT_BY_VALUES)[number];
@@ -54,6 +55,13 @@ export type ProviderResourceSelector =
     }
   | {
       brand: 'qiniuCloud';
+      openaiIndices: number[];
+      claudeIndices: number[];
+      codexIndices: number[];
+      geminiIndices: number[];
+    }
+  | {
+      brand: 'commandcode';
       openaiIndices: number[];
       claudeIndices: number[];
       codexIndices: number[];
@@ -131,6 +139,10 @@ export interface ModelEntryInput {
   testModel?: string;
   image?: boolean;
   thinkingJson?: string;
+  /** Context window size in tokens. 0 or undefined = use default. */
+  contextWindow?: number;
+  /** Maximum output tokens. 0 or undefined = use default. */
+  maxTokens?: number;
 }
 
 export type SponsorProtocol = 'openai' | 'codex' | 'claude' | 'gemini';

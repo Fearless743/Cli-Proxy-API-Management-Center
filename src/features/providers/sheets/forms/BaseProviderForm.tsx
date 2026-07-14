@@ -112,6 +112,8 @@ function buildInitialForm(
             testModel: m.testModel,
             image: m.image === true,
             thinkingJson: formatJsonObject(m.thinking),
+            contextWindow: m.contextWindow,
+            maxTokens: m.maxTokens,
           }))
         : [emptyModel()],
       headers: cfg.headers
@@ -152,6 +154,8 @@ function buildInitialForm(
           alias: m.alias ?? '',
           priority: m.priority,
           testModel: m.testModel,
+          contextWindow: m.contextWindow,
+          maxTokens: m.maxTokens,
         }))
       : [emptyModel()],
     headers: cfg.headers

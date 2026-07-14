@@ -26,6 +26,12 @@ import {
   getQiniuCloudProtocolUrls,
   resolveQiniuCloudBaseUrl,
 } from './qiniuCloud';
+import {
+  COMMANDCODE_DISPLAY_NAME,
+  COMMANDCODE_PROTOCOL_LABELS,
+  getCommandCodeProtocolUrls,
+  resolveCommandCodeBaseUrl,
+} from './commandcode';
 import type {
   ProviderBrand,
   ProviderResource,
@@ -342,5 +348,14 @@ export function qiniuCloudToResource(raw: SponsorProviderRaw): ProviderResource 
     protocolLabels: QINIU_CLOUD_PROTOCOL_LABELS,
     resolveBaseUrl: resolveQiniuCloudBaseUrl,
     getProtocolUrls: getQiniuCloudProtocolUrls,
+  });
+}
+
+export function commandcodeToResource(raw: SponsorProviderRaw): ProviderResource | null {
+  return sponsorRawToResource('commandcode', raw, {
+    displayName: COMMANDCODE_DISPLAY_NAME,
+    protocolLabels: COMMANDCODE_PROTOCOL_LABELS,
+    resolveBaseUrl: resolveCommandCodeBaseUrl,
+    getProtocolUrls: getCommandCodeProtocolUrls,
   });
 }

@@ -14,6 +14,7 @@ import {
   claudeToResource,
   code0ToResource,
   codexToResource,
+  commandcodeToResource,
   fennoAIToResource,
   geminiToResource,
   openaiToResource,
@@ -58,6 +59,7 @@ import {
   isQiniuCloudGeminiProvider,
   isQiniuCloudOpenAIProvider,
 } from './qiniuCloud';
+import { buildCommandCodeRaw, isCommandCodeOpenAIProvider } from './commandcode';
 import { getSponsorProviderDefinition, type SponsorProtocolUrls } from './sponsorDefinitions';
 import { runSponsorMutationWithRecovery } from './sponsorMutationRecovery';
 
@@ -138,6 +140,12 @@ const buildModelAliases = (
         priority: m.priority,
         testModel: m.testModel,
       };
+      if (m.contextWindow !== undefined && m.contextWindow > 0) {
+        entry.contextWindow = m.contextWindow;
+      }
+      if (m.maxTokens !== undefined && m.maxTokens > 0) {
+        entry.maxTokens = m.maxTokens;
+      }
       if (includeOpenAIFields) {
         entry.image = m.image === true;
         entry.thinking = parseThinkingJson(m.thinkingJson);
@@ -483,7 +491,8 @@ export function useProviderWorkbench(): UseProviderWorkbenchResult {
                 !isApiKeyFunOpenAIProvider(item) &&
                 !isCode0OpenAIProvider(item) &&
                 !isFennoAIOpenAIProvider(item) &&
-                !isQiniuCloudOpenAIProvider(item)
+                !isQiniuCloudOpenAIProvider(item) &&
+                !isCommandCodeOpenAIProvider(item)
               ) {
                 out.push(openaiToResource(item, index));
               }
@@ -512,6 +521,11 @@ export function useProviderWorkbench(): UseProviderWorkbenchResult {
           resources = sponsorResource ? [sponsorResource] : [];
           break;
         }
+        case 'commandcode': {
+          const sponsorResource = commandcodeToResource(buildCommandCodeRaw(config));
+          resources = sponsorResource ? [sponsorResource] : [];
+          break;
+        }
       }
       return {
         id: brand,
@@ -536,7 +550,9 @@ export function useProviderWorkbench(): UseProviderWorkbenchResult {
             ? buildCode0Raw(config)
             : brand === 'fennoAI'
               ? buildFennoAIRaw(config)
-              : buildQiniuCloudRaw(config);
+              : brand === 'qiniuCloud'
+                ? buildQiniuCloudRaw(config)
+                : buildCommandCodeRaw(config);
       const entries = normalizeSponsorKeyEntries(input.sponsorKeyEntries);
       const openaiEntry = entries.find((entry) => entry.protocol === 'openai');
       const claudeEntry = entries.find((entry) => entry.protocol === 'claude');
@@ -661,7 +677,8 @@ export function useProviderWorkbench(): UseProviderWorkbenchResult {
           brand === 'apikeyFun' ||
           brand === 'code0' ||
           brand === 'fennoAI' ||
-          brand === 'qiniuCloud'
+          brand === 'qiniuCloud' ||
+          brand === 'commandcode'
         ) {
           await runSponsorMutationWithRecovery(() => persistSponsorConfig(brand, input), refetch);
         }
@@ -723,7 +740,8 @@ export function useProviderWorkbench(): UseProviderWorkbenchResult {
           brand === 'apikeyFun' ||
           brand === 'code0' ||
           brand === 'fennoAI' ||
-          brand === 'qiniuCloud'
+          brand === 'qiniuCloud' ||
+          brand === 'commandcode'
         ) {
           await runSponsorMutationWithRecovery(() => persistSponsorConfig(brand, input), refetch);
         }
@@ -768,7 +786,8 @@ export function useProviderWorkbench(): UseProviderWorkbenchResult {
           sel.brand === 'apikeyFun' ||
           sel.brand === 'code0' ||
           sel.brand === 'fennoAI' ||
-          sel.brand === 'qiniuCloud'
+          sel.brand === 'qiniuCloud' ||
+          sel.brand === 'commandcode'
         ) {
           await runSponsorMutationWithRecovery(async () => {
             const raw = resource.raw as SponsorProviderRaw;
@@ -835,7 +854,8 @@ export function useProviderWorkbench(): UseProviderWorkbenchResult {
           brand === 'apikeyFun' ||
           brand === 'code0' ||
           brand === 'fennoAI' ||
-          brand === 'qiniuCloud'
+          brand === 'qiniuCloud' ||
+          brand === 'commandcode'
         ) {
           await runSponsorMutationWithRecovery(
             () => toggleSponsorConfig(resource.raw as SponsorProviderRaw, disabled),

@@ -1331,7 +1331,8 @@
       "apikeyFun": "APIKEY.FUN",
       "code0": "Code0",
       "fennoAI": "FennoAI",
-      "qiniuCloud": "Qiniu Cloud"
+      "qiniuCloud": "Qiniu Cloud",
+      "commandcode": "CommandCode"
     },
     "table": {
       "key": "Key",
@@ -1487,6 +1488,10 @@
       "modelBadgeThinking": "Thinking",
       "thinkingConfig": "Thinking config (JSON)",
       "thinkingConfigHint": "Supports levels, min, max, zero_allowed, dynamic_allowed",
+"contextWindow": "Context window",
+"contextWindowHint": "Input context length in tokens, 0 = use default",
+"maxTokens": "Max tokens",
+"maxTokensHint": "Maximum output tokens, 0 = use default",
       "cloakCacheUserId": "Cache user_id",
       "cloakCacheUserIdHint": "Reuse the Claude cloak user_id per API key",
       "experimentalCchSigning": "Experimental CCH signing",

@@ -10,6 +10,10 @@ export interface ModelAlias {
   testModel?: string;
   image?: boolean;
   thinking?: Record<string, unknown>;
+  /** Context window size in tokens. 0 or undefined = use default. */
+  contextWindow?: number;
+  /** Maximum output tokens. 0 or undefined = use default. */
+  maxTokens?: number;
 }
 
 export interface ApiKeyEntry {
