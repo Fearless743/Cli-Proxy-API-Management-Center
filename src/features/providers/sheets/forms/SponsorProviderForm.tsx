@@ -75,7 +75,7 @@ interface SponsorKeyEntryCardProps {
   onRemove: () => void;
 }
 
-const emptyModel = (): ModelEntryInput => ({ name: '', alias: '' });
+const emptyModel = (): ModelEntryInput => ({ name: '', alias: '', contextWindow: undefined, maxTokens: undefined });
 
 const emptySponsorKeyEntry = (
   definition: SponsorProviderDefinition,
@@ -138,7 +138,7 @@ const isHealthyUsageSummary = (summary: ApiKeyFunUsageSummary): boolean => {
 
 const modelsFromConfig = (
   models:
-    | Array<{ name?: string; alias?: string; priority?: number; testModel?: string }>
+    | Array<{ name?: string; alias?: string; priority?: number; testModel?: string; 'context-length'?: number; 'max-tokens'?: number }>
     | undefined
 ): ModelEntryInput[] =>
   models?.length
@@ -147,6 +147,8 @@ const modelsFromConfig = (
         alias: model.alias ?? '',
         priority: model.priority,
         testModel: model.testModel,
+        contextWindow: model['context-length'] && model['context-length'] > 0 ? model['context-length'] : undefined,
+        maxTokens: model['max-tokens'] && model['max-tokens'] > 0 ? model['max-tokens'] : undefined,
       }))
     : [emptyModel()];
 
@@ -318,6 +320,26 @@ function SponsorModelSection({
               onChange={(event) => updateModelEntry(modelIndex, { alias: event.target.value })}
               disabled={mutating}
             />
+            <div className={styles.modelEntryMeta}>
+              <input
+                className={styles.inputSmall}
+                type="number"
+                min={0}
+                placeholder={t('providersPage.form.contextWindow')}
+                value={entry.contextWindow ?? ''}
+                onChange={(e) => updateModelEntry(modelIndex, { contextWindow: e.target.value === '' ? undefined : Number(e.target.value) })}
+                disabled={mutating}
+              />
+              <input
+                className={styles.inputSmall}
+                type="number"
+                min={0}
+                placeholder={t('providersPage.form.maxTokens')}
+                value={entry.maxTokens ?? ''}
+                onChange={(e) => updateModelEntry(modelIndex, { maxTokens: e.target.value === '' ? undefined : Number(e.target.value) })}
+                disabled={mutating}
+              />
+            </div>
             <button
               type="button"
               className={styles.removeBtn}
